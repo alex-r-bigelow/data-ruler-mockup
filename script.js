@@ -4,6 +4,25 @@ let CURRENT_MODE = null;
 let SHOW_LAYERS = false;
 let SHOW_RULES = false;
 let CURRENT_SELECTION = 'svg';
+let CURRENT_WIDGET = null;
+
+function toggleColorScaleConfig (show) {
+  if (show) {
+    jQuery('#ExpandedInferredColorScale').show();
+    jQuery('#CollapsedColorScales').hide();
+  } else {
+    jQuery('#ExpandedInferredColorScale').hide();
+    jQuery('#CollapsedColorScales').show();
+  }
+}
+
+function showWidget (widget) {
+  CURRENT_WIDGET = widget;
+  jQuery('#ColorWidget').hide();
+  if (CURRENT_WIDGET !== null) {
+    jQuery(CURRENT_WIDGET + 'Widget').show();
+  }
+}
 
 function changeSelection (selection) {
   CURRENT_SELECTION = selection;
@@ -82,6 +101,10 @@ function toggleLayers (show) {
 
 function switchMode (mode) {
   CURRENT_MODE = mode;
+  if (CURRENT_MODE !== 'DRAWING') {
+    showWidget(null);
+  }
+
   if (CURRENT_MODE === 'CONNECTING') {
     jQuery('#DrawingTools').hide();
     jQuery('#DataPanel').show();
@@ -116,6 +139,8 @@ function initialSetup () {
   toggleRules(false);
   toggleLayers(false);
   changeSelection('#Svg');
+  toggleColorScaleConfig(false);
+  showWidget(null);
 
   clearHotspots();
   jQuery('body').on('click', flashHotspots);
