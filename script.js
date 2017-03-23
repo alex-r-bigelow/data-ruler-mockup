@@ -16,9 +16,19 @@ function toggleColorScaleConfig (show) {
   }
 }
 
+function toggleScaleConfig (show) {
+  if (show) {
+    jQuery('#ExpandedScale').show();
+    jQuery('#CollapsedScale').hide();
+  } else {
+    jQuery('#ExpandedScale').hide();
+    jQuery('#CollapsedScale').show();
+  }
+}
+
 function showWidget (widget) {
   CURRENT_WIDGET = widget;
-  jQuery('#ColorWidget').hide();
+  jQuery('#ColorWidget, #ScaleWidget').hide();
   if (CURRENT_WIDGET !== null) {
     jQuery(CURRENT_WIDGET + 'Widget').show();
   }
@@ -140,6 +150,7 @@ function initialSetup () {
   toggleLayers(false);
   changeSelection('#Svg');
   toggleColorScaleConfig(false);
+  toggleScaleConfig(false);
   showWidget(null);
 
   clearHotspots();
